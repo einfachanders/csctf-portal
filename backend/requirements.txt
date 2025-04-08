@@ -1,0 +1,13 @@
+aiosqlite
+alembic
+argon2-cffi
+bcrypt
+cachetools
+cryptography
+fastapi[standard]
+passlib
+pydantic
+pydantic-settings
+python-jose[cryptography]
+SQLAlchemy
+uvicorn
