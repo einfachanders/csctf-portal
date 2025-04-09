@@ -37,8 +37,10 @@ def delete_user(db: Session, user_id: int) -> bool:
     return False
 
 # CRUD operations for Challenge
-def create_challenge(db: Session, title: str, description: str, flag: str) -> Challenge:
-    db_challenge = Challenge(title=title, description=description, flag=flag)
+def create_challenge(db: Session, id: int, name: str, story: str, description: str,
+                     difficulty: str, flag: str) -> Challenge:
+    db_challenge = Challenge(id=id, name=name, story=story,description=description,
+                             difficulty=difficulty, flag=flag)
     db.add(db_challenge)
     db.commit()
     db.refresh(db_challenge)
@@ -47,18 +49,14 @@ def create_challenge(db: Session, title: str, description: str, flag: str) -> Ch
 def get_challenge_by_id(db: Session, challenge_id: int) -> Optional[Challenge]:
     return db.query(Challenge).filter(Challenge.id == challenge_id).first()
 
-def get_challenge_by_title(db: Session, title: str) -> Optional[Challenge]:
-    return db.query(Challenge).filter(Challenge.title == title).first()
+def get_challenge_by_title(db: Session, name: str) -> Optional[Challenge]:
+    return db.query(Challenge).filter(Challenge.name == name).first()
 
-def update_challenge(db: Session, challenge_id: int, new_title: Optional[str] = None, new_description: Optional[str] = None, new_flag: Optional[str] = None) -> Optional[Challenge]:
+def update_challenge(db: Session, challenge_id: int, **kwargs) -> Optional[Challenge]:
     db_challenge = db.query(Challenge).filter(Challenge.id == challenge_id).first()
     if db_challenge:
-        if new_title:
-            db_challenge.title = new_title
-        if new_description:
-            db_challenge.description = new_description
-        if new_flag:
-            db_challenge.flag = new_flag
+        for key, value in kwargs.items():
+            setattr(db_challenge, key, value)
         db.commit()
         db.refresh(db_challenge)
         return db_challenge

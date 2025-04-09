@@ -1,13 +1,10 @@
 from cachetools import TTLCache
 from fastapi import Request, HTTPException
 from jose import jws
-from sqlalchemy.orm import Session as DbSession
 import uuid
 
 from app.core.config import settings
-import app.crud as crud
-from app.deps import engine
-from app.models import User
+from app.exceptions import UnauthorizedException
 from app.schemas.internal import Session
 
 session_cache = TTLCache(
@@ -79,9 +76,8 @@ async def validate_cookie(request: Request) -> Session | None:
     """
     cookie_value = request.cookies.get(settings.FASTAPI_SESSION_COOKIE_NAME)
     if cookie_value is None:
-        raise HTTPException(
-            status_code=401,
-            detail="Session cookie missing"
+        raise UnauthorizedException(
+            message="Session cookie missing"
         )
     try:
         session_id = jws.verify(
@@ -91,36 +87,11 @@ async def validate_cookie(request: Request) -> Session | None:
         ).decode()
         session = await _validate_session(session_id)
         if session is None:
-            raise HTTPException(
-                status_code=401,
-                detail="Session expired or invalid"
+            raise UnauthorizedException(
+                message="Session expired or invalid"
             )
         return session
     except Exception:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid session cookie"
+        raise UnauthorizedException(
+            message="Invalid session cookie"
         )
-
-async def require_admin_user(request: Request):
-    """Ensures the user performing the request has adminstrator access rights
-
-    Args:
-        request (Request): FastAPI Request object
-
-    Raises:
-        HTTPException: Raised in case of an error
-    """
-    session = await validate_cookie(request)
-    with DbSession(engine) as db_session:
-        user = crud.get_user_by_id(db_session, session.user_id)
-        if user is None:
-            raise HTTPException(
-                status_code=401,
-                detail="Unknown user"
-            )
-        if user.is_admin == False:
-            raise HTTPException(
-                status_code=403,
-                detail="You do not have the required access rights"
-            )

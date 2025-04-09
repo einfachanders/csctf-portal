@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 from datetime import datetime
 from sqlalchemy import func
 from sqlalchemy import JSON
@@ -25,6 +25,10 @@ class Challenge(Base):
     __tablename__ = "challenges"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str]
+    name: Mapped[str]
+    story: Mapped[str]
     description: Mapped[str]
+    difficulty: Mapped[str]
     flag: Mapped[str]
+    solved: Mapped[bool] = mapped_column(default=False)
+    solved_timestamp: Mapped[Optional[datetime]]

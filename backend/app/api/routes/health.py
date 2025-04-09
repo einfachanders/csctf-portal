@@ -7,8 +7,6 @@ router = APIRouter(
     tags=["health"]
 )
 
-@router.get(f"")
+@router.get(f"", status_code=200, response_model=None)
 async def health():
-    return {
-        "status": "online",
-    }
+    return None
