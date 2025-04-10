@@ -5,8 +5,35 @@ const sessionStore = useSessionStore();
 </script>
 
 <template>
-test
+    <div class="container-fluid login-container d-flex justify-content-center align-items-center">
+        <div class="card shadow-lg p-4 rounded" style="max-width: 500px; width: 100%;">
+            <div class="card-body">
+                <div class="row">
+                    <img src="/csp10.png" class="rounded mx-auto d-block w-50" alt="...">
+                    <h3 class="text-center mb-4">CSCTF Login</h3>
+                    <form @submit="handleLogin">
+                        <div class="mb-3">
+                            <label for="inputName" class="form-label">Username</label>
+                            <input type="text" class="form-control rounded-pill" id="inputUsername" v-model="username"
+                                required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputEmail" class="form-label">Password</label>
+                            <input type="password" class="form-control rounded-pill" id="inputPassword"
+                                v-model="password" required />
+                        </div>
+                        <div class="text-center pt-2">
+                            <button type="submit" class="btn btn-primary w-50 rounded-pill">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+.login-container {
+    min-height: 100vh;
+}
 </style>
