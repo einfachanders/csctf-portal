@@ -24,9 +24,9 @@ with Session(engine) as session:
     else:
         print("Skipping creation of csp11 user, as it already exists")
 
-    challenges_path = pathlib.Path("data/challenges.json")
+    challenges_path = pathlib.Path("challenges.json")
     if not challenges_path.exists():
-        raise FileNotFoundError("data/challenges.json not found. Please provie it.")
+        raise FileNotFoundError("challenges.json not found. Please provide it.")
     else:
         with open(challenges_path, "r") as infile:
             challenges = json.load(infile)

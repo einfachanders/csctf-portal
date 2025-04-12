@@ -1,0 +1,5 @@
+./data/
+challenges.json
+Dockerfile
+.env
+docker.env

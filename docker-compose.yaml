@@ -1,0 +1,26 @@
+services:
+  csctf-frontend:
+    image: csctf/frontend
+    container_name: csctf-frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+
+  csctf-backend:
+    image: csctf/backend
+    container_name: csctf-backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    user: 10000:10000
+    env_file: backend/docker.env
+    ports:
+      - "8081:8000"
+    volumes:
+      - backend-data:/opt/csctf-portal-backend/data
+      - ./backend/challenges.json:/opt/csctf-portal-backend/challenges.json
+
+volumes:
+  backend-data:

@@ -1,0 +1,50 @@
+[
+    {
+        "id": 0,
+        "name": "challenge_0_name",
+        "story": "challenge_0_story",
+        "description": "challenge_0_description",
+        "difficulty": "challenge_0_difficulty",
+        "flag": "challenge_0_flag"
+    },
+    {
+        "id": 1,
+        "name": "challenge_1_name",
+        "story": "challenge_1_story",
+        "description": "challenge_1_description",
+        "difficulty": "challenge_1_difficulty",
+        "flag": "challenge_1_flag"
+    },
+    {
+        "id": 2,
+        "name": "challenge_2_name",
+        "story": "challenge_2_story",
+        "description": "challenge_2_description",
+        "difficulty": "challenge_2_difficulty",
+        "flag": "challenge_2_flag"
+    },
+    {
+        "id": 3,
+        "name": "challenge_3_name",
+        "story": "challenge_3_story",
+        "description": "challenge_3_description",
+        "difficulty": "challenge_3_difficulty",
+        "flag": "challenge_3_flag"
+    },
+    {
+        "id": 4,
+        "name": "challenge_4_name",
+        "story": "challenge_4_story",
+        "description": "challenge_4_description",
+        "difficulty": "challenge_4_difficulty",
+        "flag": "challenge_4_flag"
+    },
+    {
+        "id": 5,
+        "name": "challenge_5_name",
+        "story": "challenge_5_story",
+        "description": "challenge_5_description",
+        "difficulty": "challenge_5_difficulty",
+        "flag": "challenge_5_flag"
+    }
+]

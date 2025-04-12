@@ -38,9 +38,6 @@ class Settings(BaseSettings):
     FASTAPI_JWS_SECRET: str = os.urandom(64).hex()
     FASTAPI_SESSION_TIMEOUT: int = 60 * 60 * 4 # 4 hours
 
-    FASTAPI_CSCTF_ADMIN: str
-    FASTAPI_CSCTF_ADMIN_PASSWORD: str
-
     FASTAPI_CSCTF_USER: str
     FASTAPI_CSCTF_USER_PASSWORD: str
 

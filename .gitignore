@@ -1,5 +1,8 @@
 python-venv
 .env
+docker.env
+challenges.json
+.env.production
 __pycache__
 data
 .vscode

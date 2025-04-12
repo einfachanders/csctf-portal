@@ -12,12 +12,11 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-COPY ./requirements.txt /opt/csctf-portal-backend/requirements.txt
-COPY ./app/ /opt/csctf-portal-backend/app/
+COPY ./ /opt/csctf-portal-backend/
 
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir \
-    -r /opt/pizza/requirements.txt
+    -r /opt/csctf-portal-backend/requirements.txt
 
 FROM python:3.12-slim-bookworm AS runtime
 LABEL maintainer="me@bitsheep.net"
@@ -41,6 +40,7 @@ RUN apt-get update -y -q && apt-get upgrade -y -q \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /opt /opt
+RUN mkdir /opt/csctf-portal-backend/data
 RUN chown -R ctf:ctf /opt/csctf-portal-backend
 
 # Make sure we use the virtualenv:
@@ -53,4 +53,4 @@ USER 10000
 
 EXPOSE 8000/tcp
 WORKDIR /opt/csctf-portal-backend
-ENTRYPOINT [ "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000" ]
+ENTRYPOINT [ "sh", "entrypoint.sh" ]
