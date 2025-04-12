@@ -7,6 +7,7 @@ class ChallengeResp(BaseModel):
     name: str = Field(description="Challenge Name")
     story: str = Field(description="Challenge Story")
     description: str = Field(description="Challenge Description")
+    difficulty: str = Field(description="Challenge Difficulty")
     solved: bool = Field(description="Solve state of Challenge")
     solved_timestamp: Optional[datetime] = Field(
         default=None,

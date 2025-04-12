@@ -9,7 +9,7 @@ export const useSessionStore = defineStore("session", {
     async checkSession() {
       try {
         const response = await axios.get("/api/v1/auth/check-session", { withCredentials: true });
-        if (response.status === 200) {
+        if (response.status === 204) {
           this.isAuthenticated = true;
         }
       } catch (error) {
@@ -27,8 +27,8 @@ export const useSessionStore = defineStore("session", {
         this.isAuthenticated = true;
         // await this.checkGuestSession();
       } catch (error) {
-        console.log(error)
-        alert(error.response.data.message);
+        console.log(error.response)
+        throw error.response?.data?.error || "Login failed. Please try again.";
       }
     },
   },
