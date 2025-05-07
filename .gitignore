@@ -5,6 +5,7 @@ challenges.json
 .env.production
 __pycache__
 data
+files
 .vscode
 # Logs
 logs

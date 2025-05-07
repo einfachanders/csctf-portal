@@ -50,6 +50,6 @@ class Settings(BaseSettings):
 
     # Path to the applications root folder, used for path construction
     # this will point to the app/ directory
-    PROJECT_DIR: str = str(Path(__file__).resolve().parent.parent)
+    BACKEND_DIR: Path = Path().resolve()
 
 settings = Settings()

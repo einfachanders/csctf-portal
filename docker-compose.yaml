@@ -21,6 +21,7 @@ services:
     volumes:
       - backend-data:/opt/csctf-portal-backend/data
       - ./backend/challenges.json:/opt/csctf-portal-backend/challenges.json
+      - ./backend/files:/opt/csctf-portal-backend/files:ro
 
 volumes:
   backend-data:

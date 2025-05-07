@@ -37,7 +37,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Ensure correct permissions
 RUN chmod -R 755 /usr/share/nginx/html && \
     chown -R nginx:nginx /var/cache/nginx && \
-    sed -i 's,/var/run/nginx.pid,/tmp/nginx.pid,' /etc/nginx/nginx.conf
+    sed -i 's,/run/nginx.pid,/tmp/nginx.pid,' /etc/nginx/nginx.conf
 
 EXPOSE 80
 USER nginx

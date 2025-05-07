@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 import app.crud as crud
-from app.models import User
+from app.models import User, Challenge
 
 engine = create_engine("sqlite+pysqlite:///data/csctf-portal.sqlite")
 
@@ -30,10 +30,22 @@ with Session(engine) as session:
     else:
         with open(challenges_path, "r") as infile:
             challenges = json.load(infile)
-        for challenge in challenges:
-            db_challenge = crud.get_challenge_by_id(session, challenge["id"])
+        for challenge_data in challenges:
+            db_challenge = crud.get_challenge_by_id(session, challenge_data["id"])
             if db_challenge is None:
-                print(f"Challenge {challenge["id"]} not stored in database, creating it")
-                db_challenge = crud.create_challenge(session, **challenge)
+                print(f"Challenge {challenge_data['id']} not stored in database, creating it")
+                db_challenge = crud.create_challenge(session, **challenge_data)
             else:
-                print(f"Challenge {challenge["id"]} already present in database, skipping creation")
+                # Compare and update if needed
+                needs_update = False
+                for key, value in challenge_data.items():
+                    if getattr(db_challenge, key) != value:
+                        print(f"Challenge {challenge_data['id']} differs in field '{key}' (DB: {getattr(db_challenge, key)} != JSON: {value})")
+                        setattr(db_challenge, key, value)
+                        needs_update = True
+                if needs_update:
+                    print(f"Updating challenge {challenge_data['id']}")
+                    session.add(db_challenge)
+                    session.commit()
+                else:
+                    print(f"Challenge {challenge_data['id']} is up to date, skipping")

@@ -16,6 +16,7 @@ const props = defineProps({
             difficulty: "",
             solved: false,
             solved_timestamp: null,
+            filename: null,
         })
     }
 });
@@ -24,6 +25,7 @@ const flag = ref('');
 const showModal = ref(false);
 const errorMessage = ref('');
 const successMessage = ref('');
+const apiUrlPrefix = import.meta.env.VITE_API_HOST;
 
 const submitFlag = async (submittedFlag) => {
     try {
@@ -55,7 +57,6 @@ const submitFlag = async (submittedFlag) => {
             errorMessage.value = '';
         }, 5000);
     }
-
 };
 </script>
 
@@ -90,6 +91,16 @@ const submitFlag = async (submittedFlag) => {
                 <div class="modal-body">
                     <p><strong>Story:</strong> {{ challenge.story }}</p>
                     <p><strong>Description:</strong> {{ challenge.description }}</p>
+
+                    <!-- Download Button (only if there's a file and challenge not solved yet) -->
+                    <div v-if="challenge.filename && !challenge.solved" class="my-3">
+                        <a :href="`${apiUrlPrefix}/api/v1/challenges/${challenge.id}/download`"
+                           class="btn btn-outline-primary"
+                           download
+                           target="_blank">
+                            <i class="bi bi-download"></i> Download File
+                        </a>
+                    </div>
 
                     <div v-if="!challenge.solved">
                         <!-- Success Message -->
@@ -155,7 +166,6 @@ const submitFlag = async (submittedFlag) => {
 
 .modal-dialog {
     margin-top: 10vh;
-    /* Push modal down a bit */
 }
 
 .modal-content {

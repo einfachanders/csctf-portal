@@ -13,7 +13,8 @@
         "story": "challenge_1_story",
         "description": "challenge_1_description",
         "difficulty": "challenge_1_difficulty",
-        "flag": "challenge_1_flag"
+        "flag": "challenge_1_flag",
+        "filename": "challenge_1_file.zip"
     },
     {
         "id": 2,
@@ -29,7 +30,8 @@
         "story": "challenge_3_story",
         "description": "challenge_3_description",
         "difficulty": "challenge_3_difficulty",
-        "flag": "challenge_3_flag"
+        "flag": "challenge_3_flag",
+        "filename": "challenge_3_file.zip"
     },
     {
         "id": 4,

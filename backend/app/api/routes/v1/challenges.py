@@ -1,9 +1,12 @@
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends
+from fastapi.responses import FileResponse
+import pathlib
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.auth import session
+from app.core.config import settings
 import app.crud as crud
 from app.deps import get_db
 from app.exceptions import BadRequestException, NotFoundException
@@ -45,3 +48,24 @@ async def solve_challenge(id: int, req: ChallengeSolveReq, db_session: Session =
         raise BadRequestException(
             message="Incorrect flag"
         )
+
+@router.get("/{id}/download", status_code=200, response_class=FileResponse)
+async def download_challenge_data(id: int, db_session: Session = Depends(get_db)):
+    stmt = select(Challenge).where(Challenge.id == id)
+    db_challenge = db_session.scalars(stmt).first()
+    if db_challenge is None:
+        raise NotFoundException(
+            message=f"Challenge {id} not found"
+        )
+    if db_challenge.filename is None:
+        raise NotFoundException(
+            message=f"Challenge {id} has no associated file"
+        )
+    if not (settings.BACKEND_DIR / "files" / db_challenge.filename).is_file():
+        raise NotFoundException(
+            message=f"File for challenge {id} not found"
+        )
+    return FileResponse(
+        settings.BACKEND_DIR / "files" / db_challenge.filename,
+        filename=db_challenge.filename
+    )

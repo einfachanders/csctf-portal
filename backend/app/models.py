@@ -30,5 +30,6 @@ class Challenge(Base):
     description: Mapped[str]
     difficulty: Mapped[str]
     flag: Mapped[str]
+    filename: Mapped[Optional[str]]
     solved: Mapped[bool] = mapped_column(default=False)
     solved_timestamp: Mapped[Optional[datetime]]
