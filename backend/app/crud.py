@@ -38,9 +38,9 @@ def delete_user(db: Session, user_id: int) -> bool:
 
 # CRUD operations for Challenge
 def create_challenge(db: Session, id: int, name: str, story: str, description: str,
-                     difficulty: str, flag: str) -> Challenge:
+                     difficulty: str, flag: str, filename: str = None) -> Challenge:
     db_challenge = Challenge(id=id, name=name, story=story,description=description,
-                             difficulty=difficulty, flag=flag)
+                             difficulty=difficulty, flag=flag, filename=filename)
     db.add(db_challenge)
     db.commit()
     db.refresh(db_challenge)
