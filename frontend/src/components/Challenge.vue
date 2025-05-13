@@ -89,7 +89,6 @@ const submitFlag = async (submittedFlag) => {
                     <button type="button" class="btn-close" @click="showModal = false"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Story:</strong> {{ challenge.story }}</p>
                     <p><strong>Description:</strong> {{ challenge.description }}</p>
 
                     <!-- Download Button (only if there's a file and challenge not solved yet) -->
